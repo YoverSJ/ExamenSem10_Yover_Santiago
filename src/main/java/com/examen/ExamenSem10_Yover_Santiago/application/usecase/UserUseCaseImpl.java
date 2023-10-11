@@ -3,8 +3,10 @@ package com.examen.ExamenSem10_Yover_Santiago.application.usecase;
 import com.examen.ExamenSem10_Yover_Santiago.domain.model.User;
 import com.examen.ExamenSem10_Yover_Santiago.domain.ports.in.UserUseCase;
 import com.examen.ExamenSem10_Yover_Santiago.domain.ports.out.UserRepositoryPort;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserUseCaseImpl implements UserUseCase {
@@ -38,5 +40,10 @@ public class UserUseCaseImpl implements UserUseCase {
     @Override
     public Boolean eliminarUsuarioPorId(Long id) {
         return userRepositoryPort.deleteById(id);
+    }
+
+    @Override
+    public ResponseEntity<String> iniciarSesionConUsuario(Map<String, String> requestMap) {
+        return userRepositoryPort.loginWithUser(requestMap);
     }
 }

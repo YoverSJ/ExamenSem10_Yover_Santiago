@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
 
-    List<User> findByEstado(int estado);
+    List<User> findByEstado(Integer estado);
+
+    UserEntity findByUsuario(String usuario);
 
 }

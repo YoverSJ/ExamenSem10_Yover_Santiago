@@ -26,6 +26,8 @@ public class UserEntity {
     @Column(columnDefinition = "INT DEFAULT 1")
     private Integer estado;
 
+    private String role;
+
     @OneToOne
     @JoinColumn(name = "person_id")
     private PersonEntity person;
@@ -41,21 +43,22 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String usuario, String password, Integer estado, PersonEntity person, Date fechaCrea, Date fechaMod) {
+    public UserEntity(Long id, String usuario, String password, Integer estado, String role, PersonEntity person, Date fechaCrea, Date fechaMod) {
         this.id = id;
         this.usuario = usuario;
         this.password = password;
         this.estado = estado;
+        this.role = role;
         this.person = person;
         this.fechaCrea = fechaCrea;
         this.fechaMod = fechaMod;
     }
 
     public static UserEntity fromDomainModel(User user){
-        return new UserEntity(user.getId(), user.getUsuario(), user.getPassword(), user.getEstado(), PersonEntity.fromDomainModel(user.getPerson()), user.getFechaCrea(), user.getFechaMod());
+        return new UserEntity(user.getId(), user.getUsuario(), user.getPassword(), user.getEstado(), user.getRole(), user.getPerson(), user.getFechaCrea(), user.getFechaMod());
     }
 
     public User toDomainModel(){
-        return new User(id, usuario, password, estado, person.toDomainModel(), fechaCrea, fechaMod);
+        return new User(id, usuario, password, estado, role, person, fechaCrea, fechaMod);
     }
 }

@@ -1,12 +1,15 @@
 package com.examen.ExamenSem10_Yover_Santiago.infraestructure.controller;
 
 import com.examen.ExamenSem10_Yover_Santiago.application.service.UserService;
+import com.examen.ExamenSem10_Yover_Santiago.constants.Constants;
 import com.examen.ExamenSem10_Yover_Santiago.domain.model.User;
+import com.examen.ExamenSem10_Yover_Santiago.util.ReponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,6 +19,16 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<String> loginWithUser(@RequestBody(required = true) Map<String, String> requestMap){
+        try {
+            return userService.iniciarSesionConUsuario(requestMap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ReponseUtil.getResponseEntity(Constants.ALGO_SALIO_MAL, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping
